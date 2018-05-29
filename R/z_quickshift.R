@@ -136,10 +136,10 @@ QuickShiftClusters <- function(g, n) {
 #'
 #' @inherit QuickShiftClusters return
 # -----------------------------------------------------------------------------.
-#' @keywords internal
 #' @export
-QuickShiftClustering <- function (x, d, n, ...) {
+QuickShiftClustering <- function (x, d = NULL, n, k = 128, ...) {
 
+  if(is.null(d)) d <- knn_density(x, k = k)
   qs <- QuickShiftAlgorithm(x, d, ...)
   qs <- QuickShiftClusters(qs, n = n)
   qs

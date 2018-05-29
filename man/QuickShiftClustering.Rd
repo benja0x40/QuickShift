@@ -4,7 +4,7 @@
 \alias{QuickShiftClustering}
 \title{Hierarchical clustering based on density gradient ascent}
 \usage{
-QuickShiftClustering(x, d, n, ...)
+QuickShiftClustering(x, d = NULL, n, k = 128, ...)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
@@ -39,4 +39,3 @@ Springer, Berlin, Heidelberg
 \link{QuickShiftAlgorithm},
   \link{QuickShiftClusters}
 }
-\keyword{internal}

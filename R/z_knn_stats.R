@@ -88,7 +88,6 @@ knn_smoothing <- function(v, i, f = mean) {
 #' @return
 #' \code{knn_density} returns a numeric vector.
 # -----------------------------------------------------------------------------.
-#' @keywords internal
 #' @export
 knn_density <- function(
   x, k, data = NULL, i = NULL, d = NULL, smoothing = TRUE, sum2one = TRUE

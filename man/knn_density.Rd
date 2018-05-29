@@ -38,4 +38,3 @@ neighbor.
 \link{knn_musigma2},
   \link{knn_mean}
 }
-\keyword{internal}
