@@ -1,0 +1,24 @@
+Package: QuickShift
+Type: Package
+Title: QuickShift
+Version: 0.1.0
+Author: Benjamin Leblanc
+Maintainer: Benjamin Leblanc <benjaminolivierleblanc@gmail.com>
+URL: https://github.com/benja0x40/QuickShift
+Imports:
+    methods
+Depends:
+    R (>= 3.4.0)
+Suggests:
+    devtools,
+    roxygen2,
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+Description: Multivariate knn density estimation and QuickShift clustering.
+License: GPL + file LICENSE
+Encoding: UTF-8
+LazyData: TRUE
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
