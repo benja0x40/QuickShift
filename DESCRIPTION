@@ -6,9 +6,13 @@ Author: Benjamin Leblanc
 Maintainer: Benjamin Leblanc <benjaminolivierleblanc@gmail.com>
 URL: https://github.com/benja0x40/QuickShift
 Imports:
-    methods
+    methods,
+    utils,
+    matrixStats,
+    FNN,
+    igraph
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.5.0)
 Suggests:
     devtools,
     roxygen2,
@@ -17,7 +21,7 @@ Suggests:
     rmarkdown,
     covr
 Description: Multivariate knn density estimation and QuickShift clustering.
-License: GPL + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.0.1
