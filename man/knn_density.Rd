@@ -14,6 +14,9 @@ and columns = measurement conditions (query).}
 \item{k}{number of nearest neighbors, which corresponds to the smoothing parameter
 of estimated densities (larger k values = smoother).}
 
+\item{data}{numeric matrix representing multivariate data where rows = observations
+and columns = measurement conditions.}
+
 \item{i}{precomputed matrix of nearest neighbor indices (optional).}
 
 \item{d}{precomputed matrix of nearest neighbor distances (optional).}
@@ -22,8 +25,7 @@ of estimated densities (larger k values = smoother).}
 the estimated density for \link{knn_density} (default = TRUE)
 or the local variance for \link{knn_musigma2} (default = FALSE).}
 
-\item{y}{numeric matrix representing multivariate data where rows = observations
-and columns = measurement conditions.}
+\item{sum2one}{TODO: remove this.}
 }
 \value{
 \code{knn_density} returns a numeric vector.

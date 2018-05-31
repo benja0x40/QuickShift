@@ -4,7 +4,7 @@
 QuickShift (alpha)
 ================================================================================
 
-This R package is currently under development...
+This R package is under development.
 
 ### Author
 

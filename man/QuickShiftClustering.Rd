@@ -14,7 +14,9 @@ and columns = measurement conditions.}
 
 \item{n}{desired number of clusters.}
 
-\item{...}{}
+\item{k}{number of nearest neighbors for density estimation (default = 128).}
+
+\item{...}{optional arguments forwarded to the \link{QuickShiftAlgorithm} function.}
 }
 \value{
 \code{QuickShiftClustering} and \code{QuickShiftClusters} return a list

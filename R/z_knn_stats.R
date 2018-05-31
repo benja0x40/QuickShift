@@ -70,7 +70,7 @@ knn_smoothing <- function(v, i, f = mean) {
 #' number of nearest neighbors, which corresponds to the smoothing parameter
 #' of estimated densities (larger k values = smoother).
 #'
-#' @param y
+#' @param data
 #' numeric matrix representing multivariate data where rows = observations
 #' and columns = measurement conditions.
 #'
@@ -84,6 +84,9 @@ knn_smoothing <- function(v, i, f = mean) {
 #' perfom a local average smoothing of
 #' the estimated density for \link{knn_density} (default = TRUE)
 #' or the local variance for \link{knn_musigma2} (default = FALSE).
+#'
+#' @param sum2one
+#' TODO: remove this.
 #'
 #' @return
 #' \code{knn_density} returns a numeric vector.

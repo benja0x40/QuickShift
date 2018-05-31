@@ -28,6 +28,8 @@
 #' \code{QuickShiftAlgorithm} returns a graph object (see \link{igraph} package).
 # -----------------------------------------------------------------------------.
 #' @import methods
+#' @import grDevices
+#' @import graphics
 #' @import igraph
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @importFrom matrixStats colSums2 colMeans2 rowSums2 rowMeans2
@@ -132,7 +134,11 @@ QuickShiftClusters <- function(g, n) {
 #' @param n
 #' desired number of clusters.
 #'
+#' @param k
+#' number of nearest neighbors for density estimation (default = 128).
+#'
 #' @param ...
+#' optional arguments forwarded to the \link{QuickShiftAlgorithm} function.
 #'
 #' @inherit QuickShiftClusters return
 # -----------------------------------------------------------------------------.
