@@ -4,7 +4,7 @@ context("utilities")
 # + FiniteValues ---------------------------------------------------------------
 test_that("FiniteValues", {
   tst <- log(c(0, NA, 1, Inf))
-  res <- c(F, F, T, F)
+  res <- c(FALSE, FALSE, TRUE, FALSE)
   expect_equal(FiniteValues(tst), res)
   expect_equal(FiniteValues(cbind(1, tst)), res)
   expect_equal(FiniteValues(cbind(tst, 1)), res)
@@ -20,6 +20,10 @@ test_that("RankScore", {
   expect_equal(RankScore(1:2), c(0.25, 0.75))
   expect_equal(RankScore(2:1), c(0.75, 0.25))
   expect_equal(range(RankScore(1:10)), c(0.05, 0.95))
+
+  m <- r <- matrix(1, 5, 2, dimnames = list(NULL, c("x", "y")))
+  r[] <- 0.5
+  expect_identical(RankScore(m), r)
 })
 
 # + S01 ------------------------------------------------------------------------

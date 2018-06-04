@@ -76,16 +76,6 @@ make_ring_unif_2D <- function(n, normalized = TRUE) {
 # > quickshift =================================================================
 context("quickshift")
 
-# + QuickShiftAlgorithm -----------------------------------------------------------------
-test_that("QuickShiftAlgorithm", {
-
-})
-
-# + QuickShiftClusters ---------------------------------------------------------
-test_that("QuickShiftClusters", {
-
-})
-
 # + QuickShiftClustering -------------------------------------------------------
 test_that("QuickShiftClustering", {
 

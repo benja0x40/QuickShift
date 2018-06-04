@@ -4,15 +4,13 @@
 \alias{QuickShiftAlgorithm}
 \title{QuickShift algorithm (Vedaldi & Soatto, 2008)}
 \usage{
-QuickShiftAlgorithm(x, d, progress = FALSE)
+QuickShiftAlgorithm(x, d)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
 and columns = measurement conditions.}
 
 \item{d}{numeric vector representing a density estimation at each observation.}
-
-\item{progress}{show progress (logical, default = FALSE).}
 }
 \value{
 \code{QuickShiftAlgorithm} returns a graph object (see \link{igraph} package).

@@ -21,9 +21,6 @@
 #' @param d
 #' numeric vector representing a density estimation at each observation.
 #'
-#' @param progress
-#' show progress (logical, default = FALSE).
-#'
 #' @return
 #' \code{QuickShiftAlgorithm} returns a graph object (see \link{igraph} package).
 # -----------------------------------------------------------------------------.
@@ -31,15 +28,12 @@
 #' @import grDevices
 #' @import graphics
 #' @import igraph
-#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @importFrom matrixStats colSums2 colMeans2 rowSums2 rowMeans2
 #' @importFrom FNN get.knn get.knnx knnx.dist
 # -----------------------------------------------------------------------------.
 #' @keywords internal
 #' @export
-QuickShiftAlgorithm <- function (x, d, progress = FALSE) {
-
-  if(progress) pb <- txtProgressBar(min = 1, max = nrow(x), char = "|", style= 3)
+QuickShiftAlgorithm <- function (x, d) {
 
   g <- graph.empty(n = nrow(x))
   i.a <- which(FiniteValues(x) & ! is.na(d))
@@ -57,10 +51,7 @@ QuickShiftAlgorithm <- function (x, d, progress = FALSE) {
       rbind(i.a, i.b)[, chk], distance = knn$nn.dist[chk, 2]
     )
     i.a <- i.a[! chk]
-
-    if(progress) setTxtProgressBar(pb, nrow(x) - length(i.a) + 1)
   }
-  if(progress) close(pb)
 
   g
 }
@@ -137,16 +128,13 @@ QuickShiftClusters <- function(g, n) {
 #' @param k
 #' number of nearest neighbors for density estimation (default = 128).
 #'
-#' @param ...
-#' optional arguments forwarded to the \link{QuickShiftAlgorithm} function.
-#'
 #' @inherit QuickShiftClusters return
 # -----------------------------------------------------------------------------.
 #' @export
-QuickShiftClustering <- function (x, d = NULL, n, k = 128, ...) {
+QuickShiftClustering <- function (x, d = NULL, n, k = 128) {
 
   if(is.null(d)) d <- knn_density(x, k = k)
-  qs <- QuickShiftAlgorithm(x, d, ...)
+  qs <- QuickShiftAlgorithm(x, d)
   qs <- QuickShiftClusters(qs, n = n)
   qs
 }

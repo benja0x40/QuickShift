@@ -85,15 +85,12 @@ knn_smoothing <- function(v, i, f = mean) {
 #' the estimated density for \link{knn_density} (default = TRUE)
 #' or the local variance for \link{knn_musigma2} (default = FALSE).
 #'
-#' @param sum2one
-#' TODO: remove this.
-#'
 #' @return
 #' \code{knn_density} returns a numeric vector.
 # -----------------------------------------------------------------------------.
 #' @export
 knn_density <- function(
-  x, k, data = NULL, i = NULL, d = NULL, smoothing = TRUE, sum2one = TRUE
+  x, k, data = NULL, i = NULL, d = NULL, smoothing = TRUE
 ) {
 
   x <- as.matrix(x)
@@ -119,8 +116,6 @@ knn_density <- function(
     p <- knn_smoothing(p, i)
   }
 
-  if(sum2one) p <- p / sum(p)
-
   p
 }
 
@@ -143,7 +138,9 @@ knn_density <- function(
 # -----------------------------------------------------------------------------.
 #' @keywords internal
 #' @export
-knn_musigma2 <- function(x, k, i = NULL, d = NULL, smoothing = FALSE) {
+knn_musigma2 <- function(
+  x, k, data = NULL, i = NULL, d = NULL, smoothing = FALSE
+) {
 
   x <- as.matrix(x)
 
@@ -151,6 +148,11 @@ knn_musigma2 <- function(x, k, i = NULL, d = NULL, smoothing = FALSE) {
   D  <- ncol(x) # number of dimensions of each observation
 
   if(is.null(i) | is.null(d)) {
+    # if(is.null(data)) {
+    #   r <- get.knn(data = x, k = k)
+    # } else {
+    #   r <- get.knnx(data = data, query = x, k = k)
+    # }
     r <- get.knn(data = x, k = k)
     i <- r$nn.index
     d <- r$nn.dist

@@ -4,7 +4,7 @@
 \alias{QuickShiftClustering}
 \title{Hierarchical clustering based on density gradient ascent}
 \usage{
-QuickShiftClustering(x, d = NULL, n, k = 128, ...)
+QuickShiftClustering(x, d = NULL, n, k = 128)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
@@ -15,8 +15,6 @@ and columns = measurement conditions.}
 \item{n}{desired number of clusters.}
 
 \item{k}{number of nearest neighbors for density estimation (default = 128).}
-
-\item{...}{optional arguments forwarded to the \link{QuickShiftAlgorithm} function.}
 }
 \value{
 \code{QuickShiftClustering} and \code{QuickShiftClusters} return a list

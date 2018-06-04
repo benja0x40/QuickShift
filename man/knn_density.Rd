@@ -4,8 +4,7 @@
 \alias{knn_density}
 \title{knn density estimator}
 \usage{
-knn_density(x, k, data = NULL, i = NULL, d = NULL, smoothing = TRUE,
-  sum2one = TRUE)
+knn_density(x, k, data = NULL, i = NULL, d = NULL, smoothing = TRUE)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
@@ -24,8 +23,6 @@ and columns = measurement conditions.}
 \item{smoothing}{perfom a local average smoothing of
 the estimated density for \link{knn_density} (default = TRUE)
 or the local variance for \link{knn_musigma2} (default = FALSE).}
-
-\item{sum2one}{TODO: remove this.}
 }
 \value{
 \code{knn_density} returns a numeric vector.
