@@ -4,7 +4,8 @@
 \alias{knn_density}
 \title{knn density estimator}
 \usage{
-knn_density(x, k, data = NULL, i = NULL, d = NULL, smoothing = TRUE)
+knn_density(x, k, data = NULL, i = NULL, d = NULL,
+  smoothing = TRUE)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations

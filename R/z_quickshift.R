@@ -40,7 +40,7 @@ QuickShiftAlgorithm <- function (x, d) {
 
   while(length(i.a) > 1) {
 
-    knn <- get.knnx(
+    knn <- FNN::get.knnx(
       data = x[i.a, ], query = x[i.a, ], k = 2, algorithm = "kd_tree"
     )
 
@@ -51,6 +51,51 @@ QuickShiftAlgorithm <- function (x, d) {
       rbind(i.a, i.b)[, chk], distance = knn$nn.dist[chk, 2]
     )
     i.a <- i.a[! chk]
+  }
+
+  g
+}
+# =============================================================================.
+#' QuickShift algorithm (Vedaldi & Soatto, 2008) - alternative implementation
+# -----------------------------------------------------------------------------.
+#' @keywords internal
+#' @export
+QuickShiftAlgorithmAlt <- function (x, d, k = 3, plot = FALSE, alg = 0) {
+
+  g <- graph.empty(n = nrow(x))
+  i.0 <- i.a <- which(FiniteValues(x) & ! is.na(d))
+
+  n <- Inf
+  while(length(i.a) >= 2 & length(i.a) < n) {
+
+    n <- length(i.a)
+    w <- min(k, n)
+
+    knn <- FNN::get.knnx(
+      data = x[i.a, ], query = x[i.a, ], k = w,
+      algorithm = "kd_tree"
+    )
+
+    i <- knn_values(i.a, knn$nn.index)
+    j <- apply(knn_values(d, i)[, 2:w, drop = FALSE], 1, which.max) + 1
+    j <- m2v(1:n, j, nrow = n)
+    idx <- knn$nn.index[j]
+    dis <- knn$nn.dist[j]
+
+    i.b <- i.a[idx]
+    chk <- d[i.b] >= d[i.a]
+    g <- g + igraph::edges(
+      rbind(i.a, i.b)[, chk] , distance = dis[chk]
+    )
+    if(alg == 0) i.a <- i.a[! chk]
+    if(alg == 1) i.a <- unique(c(i.a[! chk], i.b[chk]))
+
+    if(plot) {
+      xyl <- range(x)
+      plot.default(NA, xlim = xyl, ylim = xyl, axes = F, xlab = "", ylab = "")
+      PlotQuickShift(x, g, new = F, length = 0.1, lwd = 1.5)
+      text(x, labels = d, pos = 1, cex = 0.8)
+    }
   }
 
   g
@@ -81,6 +126,8 @@ QuickShiftAlgorithm <- function (x, d) {
 #' @keywords internal
 #' @export
 QuickShiftClusters <- function(g, n) {
+
+  distance <- NULL # Fix R CMD check: no visible binding for global variable
 
   # Split QuickShift graph into desired number of subgraphs/clusters
   ecut <- mean(sort(E(g)$distance, decreasing = TRUE)[c(n, n+1) - 1])
@@ -128,13 +175,18 @@ QuickShiftClusters <- function(g, n) {
 #' @param k
 #' number of nearest neighbors for density estimation (default = 128).
 #'
+#' @param qsk
+#' \strong{EXPERIMENTAL}: number of nearest neighbors for QuickShift
+#' (default = 2).
+#'
 #' @inherit QuickShiftClusters return
 # -----------------------------------------------------------------------------.
 #' @export
-QuickShiftClustering <- function (x, d = NULL, n, k = 128) {
+QuickShiftClustering <- function (x, d = NULL, n, k = 128, qsk = 2) {
 
   if(is.null(d)) d <- knn_density(x, k = k)
-  qs <- QuickShiftAlgorithm(x, d)
+  if(qsk <= 2) qs <- QuickShiftAlgorithm(x, d)
+  else qs <- QuickShiftAlgorithmAlt(x, d, k = qsk)
   qs <- QuickShiftClusters(qs, n = n)
   qs
 }

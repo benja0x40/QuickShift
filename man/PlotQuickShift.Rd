@@ -4,8 +4,8 @@
 \alias{PlotQuickShift}
 \title{PlotQuickShift}
 \usage{
-PlotQuickShift(x, g, new = TRUE, length = 0.05, col = rgb(0, 0, 0, 0.2),
-  ...)
+PlotQuickShift(x, g, new = TRUE, length = 0.05, col = rgb(0, 0, 0,
+  0.2), ...)
 }
 \arguments{
 \item{x}{matrix}

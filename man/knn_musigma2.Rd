@@ -4,7 +4,8 @@
 \alias{knn_musigma2}
 \title{Local mean and variance}
 \usage{
-knn_musigma2(x, k, data = NULL, i = NULL, d = NULL, smoothing = FALSE)
+knn_musigma2(x, k, data = NULL, i = NULL, d = NULL,
+  smoothing = FALSE)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
