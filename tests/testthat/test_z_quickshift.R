@@ -76,8 +76,8 @@ make_ring_unif_2D <- function(n, normalized = TRUE) {
 # > quickshift =================================================================
 context("quickshift")
 
-# + QuickShiftClustering -------------------------------------------------------
-test_that("QuickShiftClustering", {
+# + QuickShift -----------------------------------------------------------------
+test_that("QuickShift", {
 
   layout(matrix(1:9, 3, 3, byrow = TRUE))
 
@@ -115,7 +115,7 @@ test_that("QuickShiftClustering", {
   d <- knn_density(x, k = 50)
   # plot(x, pch = 20, col = grey(0, alpha = 0.5))
   # plot(x, pch = 20, col = colorize(d))
-  g <- QuickShiftAlgorithm(x, d)
+  g <- QuickShiftAlgorithm(x, d, k = 3)
   grp <- QuickShiftClusters(g, n = 3)
   # clr <- rainbow(grp$nbr, alpha = 0.5)
   # clr <- plot_groups_2D(x, clr = clr[grp$membership], pch = 20)

@@ -12,7 +12,7 @@ QuickShiftClusters(g, n)
 \item{n}{desired number of clusters.}
 }
 \value{
-\code{QuickShiftClustering} and \code{QuickShiftClusters} return a list
+\code{QuickShift} and \code{QuickShiftClusters} return a list
 with the same following elements:
 \item{membership}{
   vector of integers in [1, \code{n}] indicating to which cluster each
@@ -25,6 +25,6 @@ Split a QuickShift graph into clusters
 }
 \seealso{
 \link{QuickShiftAlgorithm},
-  \link{QuickShiftClustering}
+  \link{QuickShift}
 }
 \keyword{internal}

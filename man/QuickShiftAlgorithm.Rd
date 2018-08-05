@@ -4,13 +4,21 @@
 \alias{QuickShiftAlgorithm}
 \title{QuickShift algorithm (Vedaldi & Soatto, 2008)}
 \usage{
-QuickShiftAlgorithm(x, d)
+QuickShiftAlgorithm(x, d, k = 2, plot = FALSE, simplified = TRUE)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
 and columns = measurement conditions.}
 
 \item{d}{numeric vector representing a density estimation at each observation.}
+
+\item{k}{number of nearest neighbors used to find increasing densities.
+The minimum value of is 2 (default).}
+
+\item{plot}{logical value allowing to visualize the contruction of the QuickShift graph.}
+
+\item{simplified}{logical value enabling to use a specific and faster implementation
+when argument \code{k} is equal to 2 (default = TRUE, yes).}
 }
 \value{
 \code{QuickShiftAlgorithm} returns a graph object (see \link{igraph} package).
@@ -27,6 +35,6 @@ Springer, Berlin, Heidelberg
 }
 \seealso{
 \link{QuickShiftClusters},
-  \link{QuickShiftClustering}
+  \link{QuickShift}
 }
 \keyword{internal}
