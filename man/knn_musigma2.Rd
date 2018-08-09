@@ -4,26 +4,24 @@
 \alias{knn_musigma2}
 \title{Local mean and variance}
 \usage{
-knn_musigma2(x, k, data = NULL, i = NULL, d = NULL,
-  smoothing = FALSE)
+knn_musigma2(x, k, xref = NULL, smoothing = FALSE,
+  nn_alg = "kd_tree")
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
-and columns = measurement conditions (query).}
+and columns = measurement conditions (query data).}
 
-\item{k}{number of nearest neighbors, which corresponds to the smoothing parameter
-of estimated densities (larger k values = smoother).}
+\item{k}{number of nearest neighbors which has equivalent effects as the
+usual bandwidth or smoothing parameters (larger k => smoother results).}
 
-\item{data}{numeric matrix representing multivariate data where rows = observations
-and columns = measurement conditions.}
+\item{xref}{numeric matrix representing multivariate data where rows = observations
+and columns = measurement conditions (optional reference data).}
 
-\item{i}{precomputed matrix of nearest neighbor indices (optional).}
+\item{smoothing}{logical value activating an additional local average smoothing of
+the estimated variances (default = FALSE, inactive).}
 
-\item{d}{precomputed matrix of nearest neighbor distances (optional).}
-
-\item{smoothing}{perfom a local average smoothing of
-the estimated density for \link{knn_density} (default = TRUE)
-or the local variance for \link{knn_musigma2} (default = FALSE).}
+\item{nn_alg}{nearest neighbor searching algorithm (default = "kd_tree").
+See \link{get.knn} for further explanations.}
 }
 \value{
 \code{knn_musigma2} returns a list with the following elements:
@@ -31,7 +29,7 @@ or the local variance for \link{knn_musigma2} (default = FALSE).}
 \item{sigma2}{knn variances (squared standard deviations)}
 }
 \description{
-k-nearest neighbor (knn) centroid and corresponding standard deviation.
+k-nearest neighbor (knn) centroid and associated local standard deviation.
 }
 \seealso{
 \link{knn_density},

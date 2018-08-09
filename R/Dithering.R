@@ -1,19 +1,20 @@
 # =============================================================================.
-#' Apply dithering to read counts
+#' Apply dithering to integer values
 # -----------------------------------------------------------------------------.
 #' @description
-#' The \code{DitherCounts} function applies a triangular dithering filter
-#' which eliminates the presence of identical values in a read count matrix.
+#' The \code{Dithering} function applies a triangular dithering filter
+#' which should eliminate the presence of identical non-zero values
+#' in the input vector or matrix, whithout distorting the original
+#' distribution of values.
 #'
 #' @param x
-#' matrix of read counts (rows = observations, columns = samples or conditions).
+#' integer vector or matrix.
 #'
 #' @return
-#' \code{DitherCounts} returns a matrix of dithered counts.
+#' \code{Dithering} returns a numeric vector or matrix.
 # -----------------------------------------------------------------------------.
-#' @keywords internal
 #' @export
-DitherCounts <- function(x) {
+Dithering <- function(x) {
 
   zero <- x == 0
   xmin <- min(x[! zero], na.rm = TRUE)

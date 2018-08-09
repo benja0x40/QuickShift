@@ -19,8 +19,4 @@ knn_smoothing(v, i, f = mean)
 \description{
 Apply a smoothing function to local values
 }
-\seealso{
-\link{knn_density},
-  \link{knn_musigma2}
-}
 \keyword{internal}

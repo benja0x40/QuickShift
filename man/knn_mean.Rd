@@ -4,18 +4,20 @@
 \alias{knn_mean}
 \title{Local mean}
 \usage{
-knn_mean(x, k, i = NULL, d = NULL)
+knn_mean(x, k, xref = NULL, nn_alg = "kd_tree")
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
-and columns = measurement conditions (query).}
+and columns = measurement conditions (query data).}
 
-\item{k}{number of nearest neighbors, which corresponds to the smoothing parameter
-of estimated densities (larger k values = smoother).}
+\item{k}{number of nearest neighbors which has equivalent effects as the
+usual bandwidth or smoothing parameters (larger k => smoother results).}
 
-\item{i}{precomputed matrix of nearest neighbor indices (optional).}
+\item{xref}{numeric matrix representing multivariate data where rows = observations
+and columns = measurement conditions (optional reference data).}
 
-\item{d}{precomputed matrix of nearest neighbor distances (optional).}
+\item{nn_alg}{nearest neighbor searching algorithm (default = "kd_tree").
+See \link{get.knn} for further explanations.}
 }
 \value{
 \code{knn_mean} returns a matrix of knn centroids.
@@ -24,7 +26,5 @@ of estimated densities (larger k values = smoother).}
 compute k-nearest neighbor (knn) centroids (i.e. mean vectors).
 }
 \seealso{
-\link{knn_musigma2},
-  \link{knn_density}
+\link{knn_density}
 }
-\keyword{internal}

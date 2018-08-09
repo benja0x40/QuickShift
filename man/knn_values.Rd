@@ -17,9 +17,4 @@ knn_values(v, i)
 \description{
 Extract local values based on a knn index matrix
 }
-\seealso{
-\link{knn_density},
-  \link{knn_musigma2},
-  \link{knn_mean}
-}
 \keyword{internal}

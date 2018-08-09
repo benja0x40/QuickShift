@@ -9,15 +9,25 @@ MatchClusters(x, r, n = NULL)
 \arguments{
 \item{x}{integer vector representing a set of cluster/class memberships.}
 
-\item{r}{integer vector representing a set of alternative cluster/class memberships
+\item{r}{integer vector representing an alternative set of cluster/class memberships
 (e.g. reference or ground truth assignments).}
 
-\item{n}{total number of classes, inferred from argument \code{x} when not provided.}
+\item{n}{total number of clusters/classes
+(inferred from argument \code{x} when not provided).}
 }
 \value{
-\code{MatchClusters} returns a matrix with the following columns:
-\item{x2r}{x to r cluster/class translation}
-\item{r2x}{r to x cluster/class translation}
+\code{MatchClusters} returns an integer matrix with the following columns:
+\item{x2r}{translation from x to r cluster/class identifiers}
+\item{r2x}{translation from r to x cluster/class identifiers}
+For instance, noting \code{m} such translation matrix, then
+\item{m[3, "x2r"]}{
+  is the best matching cluster identifier \code{r} for the cluster 3
+  in classification \code{x}
+}
+\item{m[5, "r2x"]}{
+  is the best matching cluster identifier \code{x} for the cluster 5
+  in classification \code{r}
+}
 }
 \description{
 Optimal match between two different cluster/class assignments

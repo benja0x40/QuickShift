@@ -2,39 +2,69 @@
 % Please edit documentation in R/z_knn_stats.R
 \name{knn_density}
 \alias{knn_density}
-\title{knn density estimator}
+\title{Non-parametric density estimator}
 \usage{
-knn_density(x, k, data = NULL, i = NULL, d = NULL,
-  smoothing = TRUE)
+knn_density(x, k, xref = NULL, smoothing = TRUE, nn_alg = "kd_tree")
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
-and columns = measurement conditions (query).}
+and columns = measurement conditions (query data).}
 
-\item{k}{number of nearest neighbors, which corresponds to the smoothing parameter
-of estimated densities (larger k values = smoother).}
+\item{k}{number of nearest neighbors which has equivalent effects as the
+usual bandwidth or smoothing parameters (larger k => smoother results).}
 
-\item{data}{numeric matrix representing multivariate data where rows = observations
-and columns = measurement conditions.}
+\item{xref}{numeric matrix representing multivariate data where rows = observations
+and columns = measurement conditions (optional reference data).}
 
-\item{i}{precomputed matrix of nearest neighbor indices (optional).}
+\item{smoothing}{logical value activating an additional local average smoothing of
+the estimated density (default = TRUE, active).}
 
-\item{d}{precomputed matrix of nearest neighbor distances (optional).}
-
-\item{smoothing}{perfom a local average smoothing of
-the estimated density for \link{knn_density} (default = TRUE)
-or the local variance for \link{knn_musigma2} (default = FALSE).}
+\item{nn_alg}{nearest neighbor searching algorithm (default = "kd_tree").
+See \link{get.knn} for further explanations.}
 }
 \value{
 \code{knn_density} returns a numeric vector.
 }
 \description{
-k-nearest neighbor (knn) estimator of the density \deqn{P(Xi) ~ k / N Vi}
+Standard k-nearest neighbor (knn) density estimator \deqn{P(Xi) ~ k / N Vi}
 where \eqn{N} is the number of observations and \eqn{Vi} the volume of a
 sphere of radius equal to the distance between \eqn{Xi} and its k-nearest
 neighbor.
 }
+\examples{
+
+\dontrun{
+
+n1 <- 10000
+n2 <- 20000
+g <- c(rep(1, n1), rep(2, n2))
+x <- c(rnorm(n1, 0, 1), rnorm(n2, 0, 5))
+
+o <- order(x)
+x <- x[o]
+g <- g[o]
+
+dt <- knn_density(x, k = 50)
+d1 <- knn_density(x, xref = x[g == 1], k = 50)
+d2 <- knn_density(x, xref = x[g == 2], k = 50)
+
+clr <- c(
+  dt        = grey(0.0, 0.6),
+  d1        = rgb(1.0, 0.5, 0.0, 0.6),
+  d2        = rgb(0.0, 0.5, 1.0, 0.6),
+  `d1 + d2` = rgb(1.0, 0.0, 0.0, 0.6)
+)
+
+plot(0, type = 'n', xlim = range(x), ylim = range(dt, d1, d2, d1 + d2))
+par(lwd = 1.5)
+lines(x, d1 + d2, col = clr[4])
+lines(x, dt, col = clr["dt"])
+lines(x, d1, col = clr["d1"])
+lines(x, d2, col = clr["d2"])
+legend("topright", legend = names(clr), fill = clr, bty = "n")
+
+}
+}
 \seealso{
-\link{knn_musigma2},
-  \link{knn_mean}
+\link{knn_mean}
 }
