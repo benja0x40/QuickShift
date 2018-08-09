@@ -151,7 +151,9 @@ test_that("Careful", {
   for(f in c(TRUE, FALSE)) {
     tst <- TestObject(1, n = 5)
     q <- with(
-      tst, QuickShift(M, n = 2, d = d, q = 2, graph = TRUE, fastest = f)
+      tst, QuickShift(
+        M, n = 2, d = d, q = 2, fastest = f, graph = TRUE, plot = TRUE
+      )
     )
 
     expect_identical(q$nclust, 2)
@@ -165,7 +167,6 @@ test_that("Careful", {
     expect_equal(e[, 1], c(1:4, 6:9))
     expect_equal(e[, 2], c(2:5, 7:8, 10, 10))
 
-    PlotQuickShift(tst$M, q$graph)
   }
 
   tst <- CombineTestObjects(TestObject(1, n = 5), TestObject(2, n = 18, r = 4))
@@ -176,7 +177,8 @@ test_that("Careful", {
   )
 
   layout(matrix(1:9, 3, 3, byrow = T))
-  q <- with(tst, QuickShift(M, n = 3, d = d, q = 3, plot = TRUE))
+  q <- with(tst, QuickShift(M, n = 3, d = d, q = 3, graph = TRUE))
+  PlotQuickShift(tst$M, q$graph)
 
   expect_identical(q$nclust, 3)
   expect_equal(as.vector(q$csizes), c(16, 5, 5))
