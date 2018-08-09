@@ -1,7 +1,7 @@
 Package: QuickShift
 Type: Package
 Title: QuickShift
-Version: 0.4.1
+Version: 0.4.2
 Authors@R:
     person(
       "Benjamin", "Leblanc",
@@ -28,7 +28,7 @@ Suggests:
     knitr,
     rmarkdown,
     covr
-Description: Multivariate knn density estimation and QuickShift clustering.
+Description: knn density estimation and QuickShift clustering.
 License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE

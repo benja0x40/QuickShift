@@ -177,7 +177,7 @@ test_that("Careful", {
   )
 
   layout(matrix(1:9, 3, 3, byrow = T))
-  q <- with(tst, QuickShift(M, n = 3, d = d, q = 3, graph = TRUE))
+  q <- with(tst, QuickShift(M, n = 3, d = d, q = 3, graph = TRUE, plot = TRUE))
   PlotQuickShift(tst$M, q$graph)
 
   expect_identical(q$nclust, 3)
@@ -187,12 +187,17 @@ test_that("Careful", {
 
   layout(matrix(1:9, 3, 3, byrow = T))
   tst <- TestObject(3, n = 100, r = 100)
-  q <- with(tst, QuickShift(M, n = 2, q = 2, decreasing = FALSE))
+  q <- with(tst, QuickShift(M, n = 2, q = 2, decreasing = FALSE, plot = TRUE))
   with(tst, ShowClusters(M, xyl, q))
 
   expect_identical(q$nclust, 2)
   expect_equal(as.vector(q$csizes), c(100, 1000))
   expect_equal(q$membership, c(rep(1, 100), rep(2, 1000)))
+
+  g <- igraph::make_ring(10)
+  igraph::V(g)$id <- 1:10
+  igraph::E(g)$distance <- 1
+  expect_warning(QuickShiftClusters(g, 2))
 
   # Cleanup
   file.remove("Rplots.pdf")
