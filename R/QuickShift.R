@@ -17,10 +17,6 @@
 #' number of nearest neighbors for density estimation (used only when argument
 #' \code{d} is not provided).
 #'
-#' @param q
-#' number of nearest neighbors used to find increasing densities during the
-#' QuickShift iterations. The minimum value is 2 (default).
-#'
 #' @param ...
 #' optional arguments passed to the \link{QuickShiftAlgorithm} or
 #' \link{QuickShiftClusters} functions.
@@ -33,7 +29,7 @@
 #' @importFrom FNN get.knn get.knnx knnx.dist
 # -----------------------------------------------------------------------------.
 #' @export
-QuickShift <- function (x, n, d = NULL, k = NULL, q = 2, ...) {
+QuickShift <- function (x, n, d = NULL, k = NULL, ...) {
 
   if(is.null(d) & is.null(k)) k <- min(round(sqrt(nrow(x))/2), 256)
 
@@ -46,7 +42,7 @@ QuickShift <- function (x, n, d = NULL, k = NULL, q = 2, ...) {
   if(is.null(d)) d <- knn_density(x, k = k)
 
   # Clustering
-  r <- do.call(QuickShiftAlgorithm, c(list(x = x, d = d, k = q), a[qsa]))
+  r <- do.call(QuickShiftAlgorithm, c(list(x = x, d = d), a[qsa]))
   r <- do.call(QuickShiftClusters, c(list(g = r, n = n), a[qsc]))
   r
 }

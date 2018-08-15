@@ -4,7 +4,7 @@
 \alias{QuickShift}
 \title{Hierarchical clustering based on the estimated density gradient}
 \usage{
-QuickShift(x, n, d = NULL, k = NULL, q = 2, ...)
+QuickShift(x, n, d = NULL, k = NULL, ...)
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
@@ -16,9 +16,6 @@ and columns = measurement conditions.}
 
 \item{k}{number of nearest neighbors for density estimation (used only when argument
 \code{d} is not provided).}
-
-\item{q}{number of nearest neighbors used to find increasing densities during the
-QuickShift iterations. The minimum value is 2 (default).}
 
 \item{...}{optional arguments passed to the \link{QuickShiftAlgorithm} or
 \link{QuickShiftClusters} functions.}

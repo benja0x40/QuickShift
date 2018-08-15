@@ -12,6 +12,10 @@
 #'   \link{QuickShiftClusters},
 #'   \link{QuickShift}
 # -----------------------------------------------------------------------------.
+#' @description
+#' Implementation of the QuickShift algorithm using accelerated nearest
+#' neighbor queries from the FNN package.
+#'
 #' @param x
 #' numeric matrix representing multivariate data where rows = observations
 #' and columns = measurement conditions.
@@ -19,16 +23,8 @@
 #' @param d
 #' numeric vector representing a density estimation at each observation.
 #'
-#' @param k
-#' number of nearest neighbors used to find increasing densities.
-#' The minimum value of is 2 (default).
-#'
 #' @param plot
 #' logical value allowing to visualize the contruction of the QuickShift graph.
-#'
-#' @param fastest
-#' logical value enabling to use a specific and faster implementation
-#' when argument \code{k} is equal to 2 (default = TRUE, yes).
 #'
 #' @param nn_alg
 #' nearest neighbor searching algorithm (default = "kd_tree").
@@ -40,9 +36,7 @@
 #' can extract clusters from such graph.
 # -----------------------------------------------------------------------------.
 #' @export
-QuickShiftAlgorithm <- function (
-  x, d, k = 2, plot = FALSE, fastest = TRUE, nn_alg = "kd_tree"
-) {
+QuickShiftAlgorithm <- function (x, d, plot = FALSE, nn_alg = "kd_tree") {
 
   display_iteration <- function() {
     xyl <- range(x)
@@ -55,51 +49,44 @@ QuickShiftAlgorithm <- function (
   g <- igraph::graph.empty(n = nrow(x))
   i.a <- which(FiniteValues(x) & ! is.na(d))
 
-  if(k == 2 & fastest) {
-    # Fastest implementation ---------------------------------------------------
-    while(length(i.a) >= 2) {
+  k_s <- 2
+  k_e <- 4
+  nbr <- 0
 
-      knn <- FNN::get.knnx(
-        data = x[i.a, ], query = x[i.a, ], k = 2, algorithm = nn_alg
-      )
+  while(length(i.a) >= 2) {
 
-      i.b <- i.a[knn$nn.index[, 2]]
-      chk <- d[i.b] >= d[i.a]
+    knn <- FNN::get.knnx(
+      data = x, query = x[i.a, ], k = k_e, algorithm = nn_alg
+    )
 
-      g <- g + igraph::edges(
-        rbind(i.a, i.b)[, chk], distance = knn$nn.dist[chk, 2]
-      )
-      i.a <- i.a[! chk]
+    msk <- rep(FALSE, length(i.a))
+    for(j in k_s:k_e) {
 
-      if(plot) display_iteration()
+      i.b <- knn$nn.index[, j] # Nearest neighbor of rank j
+      tst <- d[i.b] >= d[i.a]  # Density test
+      chk <- tst & ! msk       # Avoid to connect already connected points
+
+      # Connect data points to nearest neighbor with increased density
+      if(any(chk)) {
+        g <- g + igraph::edges(
+          rbind(i.a, i.b)[, chk], distance = knn$nn.dist[chk, j]
+        )
+      }
+
+      # Keep track of already connected data points
+      msk <- msk | tst
+      nbr <- nbr + sum(chk)
+
+      # Stop when all data points are connected
+      if(nbr >= nrow(x)) break
     }
-  } else {
-    # General implementation ---------------------------------------------------
-    n <- Inf
-    while(length(i.a) >= 2 & length(i.a) < n) {
+    i.a <- i.a[! msk] # Drop already connected data points
 
-      n <- length(i.a)
-      w <- min(k, n)
+    # Update the rank of nearest neighbors to be scanned in next iteration
+    k_s <- k_e + 1
+    k_e <- min(nrow(x), 2 * k_e)
 
-      knn <- FNN::get.knnx(
-        data = x[i.a, ], query = x[i.a, ], k = w, algorithm = nn_alg
-      )
-
-      i <- knn_values(i.a, knn$nn.index)
-      j <- apply(knn_values(d, i)[, 2:w, drop = FALSE], 1, which.max) + 1
-      j <- m2v(1:n, j, nrow = n)
-      idx <- knn$nn.index[j]
-      dis <- knn$nn.dist[j]
-
-      i.b <- i.a[idx]
-      chk <- d[i.b] >= d[i.a]
-      g <- g + igraph::edges(
-        rbind(i.a, i.b)[, chk] , distance = dis[chk]
-      )
-      i.a <- i.a[! chk]
-
-      if(plot) display_iteration()
-    }
+    if(plot) display_iteration()
   }
 
   g

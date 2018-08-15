@@ -4,8 +4,7 @@
 \alias{QuickShiftAlgorithm}
 \title{QuickShift algorithm (Vedaldi & Soatto, 2008)}
 \usage{
-QuickShiftAlgorithm(x, d, k = 2, plot = FALSE, fastest = TRUE,
-  nn_alg = "kd_tree")
+QuickShiftAlgorithm(x, d, plot = FALSE, nn_alg = "kd_tree")
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations
@@ -13,13 +12,7 @@ and columns = measurement conditions.}
 
 \item{d}{numeric vector representing a density estimation at each observation.}
 
-\item{k}{number of nearest neighbors used to find increasing densities.
-The minimum value of is 2 (default).}
-
 \item{plot}{logical value allowing to visualize the contruction of the QuickShift graph.}
-
-\item{fastest}{logical value enabling to use a specific and faster implementation
-when argument \code{k} is equal to 2 (default = TRUE, yes).}
 
 \item{nn_alg}{nearest neighbor searching algorithm (default = "kd_tree").
 See \link{get.knn} for further explanations.}
@@ -30,7 +23,8 @@ See \link{get.knn} for further explanations.}
 can extract clusters from such graph.
 }
 \description{
-QuickShift algorithm (Vedaldi & Soatto, 2008)
+Implementation of the QuickShift algorithm using accelerated nearest
+neighbor queries from the FNN package.
 }
 \references{
 Vedaldi A., Soatto S. (2008) Quick Shift and Kernel Methods for Mode Seeking.
