@@ -1,7 +1,7 @@
 Package: QuickShift
 Type: Package
 Title: QuickShift
-Version: 0.5.0
+Version: 0.5.1
 Authors@R:
     person(
       "Benjamin", "Leblanc",
@@ -18,7 +18,11 @@ Imports:
     matrixStats,
     FNN,
     igraph,
-    triangle
+    triangle,
+    ash,
+    akima,
+    fields,
+    caTools
 Depends:
     R (>= 3.5.0)
 Suggests:

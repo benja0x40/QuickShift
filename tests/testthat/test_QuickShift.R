@@ -118,9 +118,13 @@ test_that("Careful", {
   expect_equal(q$membership, c(rep(3, 5), rep(1, 5), rep(2, 16)))
 
   layout(matrix(1:9, 3, 3, byrow = T))
-  tst <- TestObject(3, n = 100, r = 100)
-  q <- with(tst, QuickShift(M, n = 2, decreasing = FALSE))
-  with(tst, ShowClusters(M, xyl, q, use_colors = TRUE))
+  loop <- TRUE
+  while(loop) {
+    tst <- TestObject(3, n = 100, r = 100)
+    q <- with(tst, QuickShift(M, n = 2, decreasing = FALSE))
+    with(tst, ShowClusters(M, xyl, q, use_colors = TRUE))
+    loop <- any(is.na(q$membership))
+  }
 
   expect_identical(q$nclust, 2)
   expect_equal(as.vector(q$csizes), c(100, 1000))

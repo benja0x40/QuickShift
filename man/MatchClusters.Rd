@@ -4,16 +4,13 @@
 \alias{MatchClusters}
 \title{Optimal match between two different cluster/class assignments}
 \usage{
-MatchClusters(x, r, n = NULL)
+MatchClusters(x, r)
 }
 \arguments{
 \item{x}{integer vector representing a set of cluster/class memberships.}
 
 \item{r}{integer vector representing an alternative set of cluster/class memberships
 (e.g. reference or ground truth assignments).}
-
-\item{n}{total number of clusters/classes
-(inferred from argument \code{x} when not provided).}
 }
 \value{
 \code{MatchClusters} returns an integer matrix with the following columns:

@@ -26,7 +26,7 @@ PlotQuickShift <- function(
   x, g, new = TRUE, length = 0.05, col = grey(0, 0.2), ...
 ) {
 
-  if(new) plot(x[, 1], x[, 2], type='n')
+  if(new) plot(x[, 1], x[, 2], type='n', xlab = '', ylab = '')
 
   el <- igraph::as_edgelist(g)
   suppressWarnings(

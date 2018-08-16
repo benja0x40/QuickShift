@@ -42,13 +42,20 @@ QuickShiftClusters <- function(
 
   distance <- NULL # Fix R CMD check: no visible binding for global variable
 
-  # Split QuickShift graph into desired number of subgraphs/clusters
-  ecut <- mean(sort(E(g)$distance, decreasing = TRUE)[c(n, n+1) - 1])
-  V(g)$id <- 1:length(V(g))
-  g <- g - E(g)[distance >= ecut]
-
-  # Find the root observation for each subgraph
+  # Find the root observations
   roots <- which(igraph::degree(g, mode = "out") == 0)
+
+  # Split QuickShift graph into desired number of subgraphs/clusters
+  k <- n - length(roots)
+  if(k > 0) {
+    ecut <- mean(sort(igraph::E(g)$distance, decreasing = TRUE)[k + 0:1])
+    igraph::V(g)$id <- 1:length(igraph::V(g))
+    g <- g - igraph::E(g)[distance >= ecut]
+  }
+
+  # Update roots
+  roots <- which(igraph::degree(g, mode = "out") == 0)
+
   if(length(roots) != n) {
     n <- length(roots)
     warning("unexpected graph structure")
@@ -56,7 +63,7 @@ QuickShiftClusters <- function(
 
   # Result template
   r <- list(
-    membership = rep(NA, length(V(g))),
+    membership = rep(NA, length(igraph::V(g))),
     csizes     = rep(0, n),
     nclust     = n
   )

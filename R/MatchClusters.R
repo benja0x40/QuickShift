@@ -8,10 +8,6 @@
 #' integer vector representing an alternative set of cluster/class memberships
 #' (e.g. reference or ground truth assignments).
 #'
-#' @param n
-#' total number of clusters/classes
-#' (inferred from argument \code{x} when not provided).
-#'
 #' @return
 #' \code{MatchClusters} returns an integer matrix with the following columns:
 #' \item{x2r}{translation from x to r cluster/class identifiers}
@@ -27,9 +23,13 @@
 #' }
 # -----------------------------------------------------------------------------.
 #' @export
-MatchClusters <- function(x, r, n = NULL) {
+MatchClusters <- function(x, r) {
+
   # Number of classes
-  if(is.null(n)) n <- length(tabulate(x))
+  n_x <- length(tabulate(x))
+  n_r <- length(tabulate(r))
+  n <- max(n_x, n_r)
+
   # Compute all intersections
   tbl <- matrix(0, n, n)
   for(i in 1:n) {
@@ -37,6 +37,7 @@ MatchClusters <- function(x, r, n = NULL) {
       tbl[i, j] <- sum(x == i & r == j)
     }
   }
+
   # Make optimal associations
   idx <- matrix(0, n, 2, dimnames = list(NULL, c("x2r", "r2x")))
   o <- QuickShift::v2m(order(tbl, decreasing = TRUE), nrow = n)
@@ -46,5 +47,12 @@ MatchClusters <- function(x, r, n = NULL) {
       idx[o[k, 2], 2] <- o[k, 1]
     }
   }
+
+  # Non-matching cluster ids (due to different number of clusters in x and r)
+  fix <- 1:n > n_x | idx[, 1] > n_r
+  idx[fix, 1] <- NA
+  fix <- 1:n > n_r | idx[, 2] > n_x
+  idx[fix, 2] <- NA
+
   idx
 }
