@@ -1,74 +1,4 @@
 # =============================================================================.
-#' ** RESERVED FOR INTERNAL USE **
-# -----------------------------------------------------------------------------.
-#' @inherit ash::ash1 params return details seealso
-#' @description
-#' ash::ash1 modified to use message() instead of regular text output
-# -----------------------------------------------------------------------------.
-#' @keywords internal
-ash1 <- function(bins, m = 5, kopt = c(2, 2), quiet = TRUE){
-  nc <- bins$nc
-  ab <- bins$ab
-  nbin <- length(nc)
-  r <- .Fortran(
-    "ash1",
-    as.integer(m),
-    as.integer(nc),
-    as.integer(nbin),
-    as.double(ab),
-    as.integer(kopt),
-    t = double(nbin),
-    f = double(nbin),
-    double(m),
-    ier = integer(1),
-    PACKAGE = "ash"
-  )
-  if(r$ier == 1 & ! quiet) message("ash estimate nonzero outside interval ab")
-  list(x = r$t, y = r$f, m = m, ab = ab, kopt = kopt, ier = r$ier)
-}
-
-# =============================================================================.
-#' ** RESERVED FOR INTERNAL USE **
-# -----------------------------------------------------------------------------.
-#' @inherit ash::ash2 params return details seealso
-#' @description
-#' ash::ash2 modified to use message() instead of regular text output
-# -----------------------------------------------------------------------------.
-#' @keywords internal
-ash2 <- function(bins, m = c(5, 5), kopt = c(2, 2), quiet = TRUE){
-  center <- function(ab, k) {
-    h <- diff(ab) / k
-    list(seq(ab[1] + h / 2, by = h, length = k) )
-  }
-  nc <- bins$nc
-  if(! is.matrix(nc)) stop("bins does not contain bin count matrix")
-  ab <- bins$ab
-  if(! is.matrix(ab)) stop("ab not a matrix - should be 2 by 2")
-  nbin <- dim(nc)
-  r <- .Fortran(
-    "ash2",
-    as.integer(m[1]),
-    as.integer(m[2]),
-    as.integer(nc),
-    as.integer(nbin[1]),
-    as.integer(nbin[2]),
-    as.double(ab),
-    as.integer(kopt),
-    f = double(nbin[1] * nbin[2]),
-    double(m[1] * m[2]),
-    ier = double(1),
-    PACKAGE = "ash"
-  )
-  if(r$ier == 1 & ! quiet) message(" estimate nonzero outside ab rectangle")
-  list(
-    z = matrix(r$f, nbin[1], nbin[2]),
-    x = center(ab[1, ], nbin[1])[[1]],
-    y = center(ab[2, ], nbin[2])[[1]],
-    ab = ab, m = m, kopt = kopt, ier = r$ier
-  )
-}
-
-# =============================================================================.
 #' Univariate density estimation for given observations
 # -----------------------------------------------------------------------------.
 #' @seealso
@@ -154,7 +84,7 @@ ASH1D <- function(
 
   # Average Shifted Histogram
   d <- ash::bin1(data, ab = rx * r, nbin = n)
-  d <- ash1(d, m = k, ...)
+  d <- ash::ash1(d, m = k, ...)
 
   # Interpolation
   d <- stats::approx(d$x, d$y, xout = x, rule = 2)
@@ -280,7 +210,7 @@ ASH2D <- function(
 
   # Average Shifted Histogram
   d <- ash::bin2(data, nbin = n)
-  d <- ash2(d, m = k, ...)
+  d <- ash::ash2(d, m = k, ...)
 
   # Interpolation
   if(interpolation == "fields") { # fastest
