@@ -1,7 +1,7 @@
 Package: QuickShift
 Type: Package
 Title: QuickShift
-Version: 0.5.2
+Version: 0.5.3
 Authors@R:
     person(
       "Benjamin", "Leblanc",
@@ -36,5 +36,5 @@ Description: knn density estimation and QuickShift clustering.
 License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr

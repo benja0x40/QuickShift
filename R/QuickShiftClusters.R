@@ -68,10 +68,14 @@ QuickShiftClusters <- function(
     nclust     = n
   )
 
-  # Tag each observation with an identifier of the subgraph it belongs to
-  for(k in 1:n) {
-    sg <- igraph::subcomponent(g, v = roots[k], mode = "in")
-    r$membership[sg$id] <- k
+  if(n == 1) {
+    r$membership <- rep(1, length(igraph::V(g)))
+  } else {
+    # Tag each observation with an identifier of the subgraph it belongs to
+    for(k in 1:n) {
+      sg <- igraph::subcomponent(g, v = roots[k], mode = "in")
+      r$membership[sg$id] <- k
+    }
   }
 
   # Population sizes
