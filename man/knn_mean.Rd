@@ -2,7 +2,7 @@
 % Please edit documentation in R/z_knn_stats.R
 \name{knn_mean}
 \alias{knn_mean}
-\title{Local mean}
+\title{Multivariate local means}
 \usage{
 knn_mean(x, k, xref = NULL, nn_alg = "kd_tree")
 }

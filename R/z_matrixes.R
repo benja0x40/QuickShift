@@ -4,9 +4,9 @@
 #' ** RESERVED FOR INTERNAL USE **
 # -----------------------------------------------------------------------------.
 #' @description
-#' Convert matrix indices into vector indices such that:
+#' Convert matrix indexes into vector indexes such that:
 #'
-#' x <- m2v(i, j) => M[i, j] = M[x] for each pair of indices
+#' x <- m2v(i, j) => M[i, j] = M[x] for each pair of indexes
 # -----------------------------------------------------------------------------.
 #' @keywords internal
 #' @export
@@ -18,9 +18,9 @@ m2v <- function(i, j, nrow) {
 #' ** RESERVED FOR INTERNAL USE **
 # -----------------------------------------------------------------------------.
 #' @description
-#' Convert vector indices into matrix indices such that:
+#' Convert vector indexes into matrix indexes such that:
 #'
-#' ij <- v2m(x) => M[x] = M[ij[, 1], ij[, 2]] for each pair of indices
+#' ij <- v2m(x) => M[x] = M[ij[, 1], ij[, 2]] for each pair of indexes
 # -----------------------------------------------------------------------------.
 #' @keywords internal
 #' @export

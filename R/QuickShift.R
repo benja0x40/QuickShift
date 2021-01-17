@@ -21,7 +21,7 @@
 #' optional arguments passed to the \link{QuickShiftAlgorithm} or
 #' \link{QuickShiftClusters} functions.
 # -----------------------------------------------------------------------------.
-#' @import methods
+#' @import utils
 #' @import grDevices
 #' @import graphics
 #' @import igraph

@@ -2,10 +2,9 @@
 % Please edit documentation in R/z_knn_stats.R
 \name{knn_musigma2}
 \alias{knn_musigma2}
-\title{Local mean and variance}
+\title{Multivariate local means and variances}
 \usage{
-knn_musigma2(x, k, xref = NULL, smoothing = FALSE,
-  nn_alg = "kd_tree")
+knn_musigma2(x, k, xref = NULL, smoothing = FALSE, nn_alg = "kd_tree")
 }
 \arguments{
 \item{x}{numeric matrix representing multivariate data where rows = observations

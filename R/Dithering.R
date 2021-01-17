@@ -4,7 +4,7 @@
 #' @description
 #' The \code{Dithering} function applies a triangular dithering filter
 #' which should eliminate the presence of identical non-zero values
-#' in the input vector or matrix, whithout distorting the original
+#' in the input vector or matrix, without distorting the original
 #' distribution of values.
 #'
 #' @param x

@@ -2,7 +2,7 @@
 % Please edit documentation in R/z_utilities.R
 \name{FiniteValues}
 \alias{FiniteValues}
-\title{Localise safe numeric observations (i.e. not NA, NaN, Inf)}
+\title{Localize safe numeric observations (i.e. not NA, NaN, Inf)}
 \usage{
 FiniteValues(x)
 }
@@ -13,7 +13,7 @@ FiniteValues(x)
 \code{FiniteValues} returns a logical vector.
 }
 \description{
-Localise safe numeric observations (i.e. not NA, NaN, Inf)
+Localize safe numeric observations (i.e. not NA, NaN, Inf)
 }
 \seealso{
 \link{is.finite}

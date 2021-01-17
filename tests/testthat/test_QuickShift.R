@@ -72,18 +72,6 @@ TestObject <- function(i, n, r = 1) {
   list(M = M, d = d, xyl = xyl)
 }
 
-# =============================================================================.
-#
-# -----------------------------------------------------------------------------.
-# n <- 100
-# layout(matrix(1:9, 3, 3, byrow = TRUE))
-# plot(make_square_grid_2D(n), pch = 20, col = grey(0, alpha = 0.5))
-# plot(make_disk_grid_2D(n), pch = 20, col = grey(0, alpha = 0.5))
-# plot(make_ring_grid_2D(n), pch = 20, col = grey(0, alpha = 0.5))
-# plot(make_square_unif_2D(n), pch = 20, col = grey(0, alpha = 0.5))
-# plot(make_disk_unif_2D(n), pch = 20, col = grey(0, alpha = 0.5))
-# plot(make_ring_unif_2D(n), pch = 20, col = grey(0, alpha = 0.5))
-
 # TESTS ########################################################################
 
 # > QuickShift =================================================================
@@ -93,11 +81,17 @@ context("QuickShift")
 test_that("Careful", {
 
   tst <- TestObject(1, n = 5)
+
+  q <- with(tst, QuickShift(M, n = 1, d = d, graph = FALSE, plot = FALSE))
+
+  expect_identical(q$nclust, 1)
+  expect_equal(as.vector(q$csizes), nrow(tst$M))
+  expect_identical(q$membership, rep(1:1, nrow(tst$M)))
+
   q <- with(tst, QuickShift(M, n = 2, d = d, graph = TRUE, plot = TRUE))
 
   expect_identical(q$nclust, 2)
   expect_equal(as.vector(q$csizes), c(5, 5))
-
   expect_identical(q$membership, rep(1:2, each = 5))
 
   e <- as_edgelist(q$graph)

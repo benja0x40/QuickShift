@@ -1,13 +1,13 @@
 # FUNCTIONS | KNN STATS ########################################################
 
 # =============================================================================.
-#' Extract local values based on a knn index matrix
+#' Extract multivariate local values based on a knn index matrix
 # -----------------------------------------------------------------------------.
 #' @param v
 #' numeric vector.
 #'
 #' @param i
-#' precomputed matrix of nearest neighbor indices.
+#' precomputed matrix of nearest neighbor indexes.
 #'
 #' @return
 #' \code{knn_values} returns a matrix.
@@ -20,7 +20,7 @@ knn_values <- function(v, i) {
 }
 
 # =============================================================================.
-#' Apply a smoothing function to local values
+#' Apply a smoothing function to multivariate local values
 # -----------------------------------------------------------------------------.
 #' @inheritParams knn_values
 #'
@@ -41,13 +41,13 @@ knn_smoothing <- function(v, i, f = mean) {
 }
 
 # =============================================================================.
-#' Non-parametric density estimator
+#' Non-parametric multivariate density estimator
 # -----------------------------------------------------------------------------.
 #' @seealso
 #'   \link{knn_mean}
 # -----------------------------------------------------------------------------.
 #' @description
-#' Standard k-nearest neighbor (knn) density estimator \deqn{P(Xi) ~ k / N Vi}
+#' Standard k-nearest neighbor (knn) density estimator \deqn{P(Xi) ~ k / (N Vi)}
 #' where \eqn{N} is the number of observations and \eqn{Vi} the volume of a
 #' sphere of radius equal to the distance between \eqn{Xi} and its k-nearest
 #' neighbor.
@@ -136,7 +136,7 @@ knn_density <- function(
 }
 
 # =============================================================================.
-#' Local mean and variance
+#' Multivariate local means and variances
 # -----------------------------------------------------------------------------.
 #' @seealso
 #'   \link{knn_density},
@@ -196,7 +196,7 @@ knn_musigma2 <- function(
 }
 
 # =============================================================================.
-#' Local mean
+#' Multivariate local means
 # -----------------------------------------------------------------------------.
 #' @seealso
 #'   \link{knn_density}

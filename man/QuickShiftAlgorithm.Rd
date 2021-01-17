@@ -12,7 +12,7 @@ and columns = measurement conditions.}
 
 \item{d}{numeric vector representing a density estimation at each observation.}
 
-\item{plot}{logical value allowing to visualize the contruction of the QuickShift graph.}
+\item{plot}{logical value allowing to visualize the construction of the QuickShift graph.}
 
 \item{nn_alg}{nearest neighbor searching algorithm (default = "kd_tree").
 See \link{get.knn} for further explanations.}

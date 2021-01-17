@@ -42,25 +42,6 @@ QuickShiftClusters <- function(
 
   distance <- NULL # Fix R CMD check: no visible binding for global variable
 
-  # Find the root observations
-  roots <- which(igraph::degree(g, mode = "out") == 0)
-
-  # Split QuickShift graph into desired number of subgraphs/clusters
-  k <- n - length(roots)
-  if(k > 0) {
-    ecut <- mean(sort(igraph::E(g)$distance, decreasing = TRUE)[k + 0:1])
-    igraph::V(g)$id <- 1:length(igraph::V(g))
-    g <- g - igraph::E(g)[distance >= ecut]
-  }
-
-  # Update roots
-  roots <- which(igraph::degree(g, mode = "out") == 0)
-
-  if(length(roots) != n) {
-    n <- length(roots)
-    warning("unexpected graph structure")
-  }
-
   # Result template
   r <- list(
     membership = rep(NA, length(igraph::V(g))),
@@ -68,14 +49,33 @@ QuickShiftClusters <- function(
     nclust     = n
   )
 
-  if(n == 1) {
-    r$membership <- rep(1, length(igraph::V(g)))
-  } else {
+  if(n > 1) {
+    # Find the root observations
+    roots <- which(igraph::degree(g, mode = "out") == 0)
+
+    # Split QuickShift graph into desired number of subgraphs/clusters
+    k <- n - length(roots)
+    if(k > 0) {
+      ecut <- mean(sort(igraph::E(g)$distance, decreasing = TRUE)[k + 0:1])
+      igraph::V(g)$id <- 1:length(igraph::V(g))
+      g <- g - igraph::E(g)[distance >= ecut]
+    }
+
+    # Update roots
+    roots <- which(igraph::degree(g, mode = "out") == 0)
+
+    if(length(roots) != n) {
+      n <- length(roots)
+      warning("unexpected graph structure")
+    }
+
     # Tag each observation with an identifier of the subgraph it belongs to
     for(k in 1:n) {
       sg <- igraph::subcomponent(g, v = roots[k], mode = "in")
       r$membership[sg$id] <- k
     }
+  } else {
+    r$membership <- rep(1, length(igraph::V(g)))
   }
 
   # Population sizes

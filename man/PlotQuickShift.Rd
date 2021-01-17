@@ -4,8 +4,7 @@
 \alias{PlotQuickShift}
 \title{Plot a QuickShift graph}
 \usage{
-PlotQuickShift(x, g, new = TRUE, length = 0.05, col = grey(0, 0.2),
-  ...)
+PlotQuickShift(x, g, new = TRUE, length = 0.05, col = grey(0, 0.2), ...)
 }
 \arguments{
 \item{x}{numeric matrix representing 2D coordinates of the data points.}

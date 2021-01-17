@@ -1,20 +1,24 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-language: R
-cache: packages
-
-# Use containers
-sudo: false
+language: r
+cache:
+  packages: true
 
 # Run for pushes to the master branch only
 branches:
   only:
-   - master
+    - master
 
+# List of R packages to install via install.packages
 r_packages:
   - covr
 
+# List of packages to install from GitHub using devtools::install_github
 # r_github_packages:
 
+# List of Bioconductor packages to install
+# bioc_packages:
+
+# Forces all WARNINGS from R CMD check to become build failures
 warnings_are_errors: false
 
 matrix:
@@ -23,6 +27,10 @@ matrix:
       # r_build_args: '--no-build-vignettes'
       # r_check_args: '--ignore-vignettes'
       env: R_CODECOV=true
+      addons:
+        apt:
+          packages:
+            - libgit2-dev
     # - os: osx
     #   r_build_args: '--no-build-vignettes'
     #   r_check_args: '--ignore-vignettes'

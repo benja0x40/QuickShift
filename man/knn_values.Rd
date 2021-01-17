@@ -2,19 +2,19 @@
 % Please edit documentation in R/z_knn_stats.R
 \name{knn_values}
 \alias{knn_values}
-\title{Extract local values based on a knn index matrix}
+\title{Extract multivariate local values based on a knn index matrix}
 \usage{
 knn_values(v, i)
 }
 \arguments{
 \item{v}{numeric vector.}
 
-\item{i}{precomputed matrix of nearest neighbor indices.}
+\item{i}{precomputed matrix of nearest neighbor indexes.}
 }
 \value{
 \code{knn_values} returns a matrix.
 }
 \description{
-Extract local values based on a knn index matrix
+Extract multivariate local values based on a knn index matrix
 }
 \keyword{internal}

@@ -4,8 +4,7 @@
 \alias{QuickShiftClusters}
 \title{Clustering from a QuickShift graph}
 \usage{
-QuickShiftClusters(g, n, graph = FALSE, id_by_pop = TRUE,
-  decreasing = TRUE)
+QuickShiftClusters(g, n, graph = FALSE, id_by_pop = TRUE, decreasing = TRUE)
 }
 \arguments{
 \item{g}{a QuickShift graph resulting from the \link{QuickShiftAlgorithm} function.}

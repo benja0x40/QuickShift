@@ -7,8 +7,8 @@
 m2v(i, j, nrow)
 }
 \description{
-Convert matrix indices into vector indices such that:
+Convert matrix indexes into vector indexes such that:
 
-x <- m2v(i, j) => M[i, j] = M[x] for each pair of indices
+x <- m2v(i, j) => M[i, j] = M[x] for each pair of indexes
 }
 \keyword{internal}

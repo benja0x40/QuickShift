@@ -2,7 +2,7 @@
 % Please edit documentation in R/z_knn_stats.R
 \name{knn_density}
 \alias{knn_density}
-\title{Non-parametric density estimator}
+\title{Non-parametric multivariate density estimator}
 \usage{
 knn_density(x, k, xref = NULL, smoothing = TRUE, nn_alg = "kd_tree")
 }
@@ -26,7 +26,7 @@ See \link{get.knn} for further explanations.}
 \code{knn_density} returns a numeric vector.
 }
 \description{
-Standard k-nearest neighbor (knn) density estimator \deqn{P(Xi) ~ k / N Vi}
+Standard k-nearest neighbor (knn) density estimator \deqn{P(Xi) ~ k / (N Vi)}
 where \eqn{N} is the number of observations and \eqn{Vi} the volume of a
 sphere of radius equal to the distance between \eqn{Xi} and its k-nearest
 neighbor.

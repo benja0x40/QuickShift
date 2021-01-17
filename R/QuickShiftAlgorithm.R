@@ -24,7 +24,7 @@
 #' numeric vector representing a density estimation at each observation.
 #'
 #' @param plot
-#' logical value allowing to visualize the contruction of the QuickShift graph.
+#' logical value allowing to visualize the construction of the QuickShift graph.
 #'
 #' @param nn_alg
 #' nearest neighbor searching algorithm (default = "kd_tree").

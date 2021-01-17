@@ -4,6 +4,11 @@
 #' @seealso
 #'   \link{ASH2D}
 # -----------------------------------------------------------------------------.
+#' @description
+#' The \code{ASH1D} function performs univariate density estimations based on
+#' the Average Shifted Histogram method implemented in \link{ash1} followed by
+#' a linear interpolation of density values.
+#'
 #' @param x
 #' numeric vector.
 #'
@@ -16,14 +21,17 @@
 #' @param k
 #' smoothing in number of bins.
 #'
+#' @param r
+#' optional numeric vector determining the range of values to be considered.
+#'
 #' @param rx
 #' range expansion.
 #'
 #' @param safe
-#' logical (defautl = TRUE, yes).
+#' logical (default = TRUE, yes).
 #'
 #' @param ...
-#' optional argument (\code{kopt}) forwarded to the \link{bin1} function.
+#' optional argument (\code{kopt}) forwarded to the \link{ash1} function.
 #'
 #' @return
 #' \code{ASH1D} returns a numeric vector with estimated densities.
@@ -61,13 +69,12 @@
 #' legend("topright", legend = names(clr), fill = clr, bty = "n")
 #' }
 # -----------------------------------------------------------------------------.
-#' @keywords internal
 #' @export
 ASH1D <- function(
   x, data = NULL, n = 200, k = 5, r = NULL, rx = 1.1, safe = TRUE, ...
 ) {
 
-  # Initializations
+  # Initialization
   if(is.null(data)) {
     data <- x
     s <- 1
@@ -82,9 +89,9 @@ ASH1D <- function(
     else     r <- range(data[FiniteValues(data)])
   }
 
-  # Average Shifted Histogram
+  # Average Shifted Histogram (hide message about non-zero out of range density)
   d <- ash::bin1(data, ab = rx * r, nbin = n)
-  d <- ash::ash1(d, m = k, ...)
+  capture.output({ d <- ash::ash1(d, m = k, ...) })
 
   # Interpolation
   d <- stats::approx(d$x, d$y, xout = x, rule = 2)
@@ -105,6 +112,11 @@ ASH1D <- function(
 #' @seealso
 #'   \link{ASH1D}
 # -----------------------------------------------------------------------------.
+#' @description
+#' The \code{ASH2D} function performs bivariate density estimations based on
+#' the Average Shifted Histogram method implemented in \link{ash2} followed by
+#' a bilinear interpolation of density values.
+#'
 #' @param V
 #' numeric matrix with 2 columns.
 #'
@@ -121,10 +133,15 @@ ASH1D <- function(
 #' range expansion.
 #'
 #' @param safe
-#' logical (defautl = TRUE, yes).
+#' logical (default = TRUE, yes).
+#'
+#' @param interpolation
+#' bilinear interpolation function, either
+#' "fields" (default, see \link{interp.surface} from package \code{fields}) or
+#' "akima" (see \link{bilinear} from package \code{akima}).
 #'
 #' @param ...
-#' optional argument forwarded to the \link{ash2} function.
+#' optional argument (\code{kopt}) forwarded to the \link{ash2} function.
 #'
 #' @return
 #' \code{ASH2D} returns a numeric vector with estimated densities.
@@ -184,7 +201,6 @@ ASH1D <- function(
 #' points(V[o, ], col = colorize(dt[o], color = "WGB"), cex = 0.5)
 #' }
 # -----------------------------------------------------------------------------.
-#' @keywords internal
 #' @export
 ASH2D <- function(
   V, data = NULL, n = c(200, 200), k = c(5, 5), rx = c(1.1, 1.1), safe = TRUE,
@@ -193,7 +209,7 @@ ASH2D <- function(
 
   interpolation <- match.arg(interpolation)
 
-  # Initializations
+  # Initialization
   if(is.null(data)) {
     data <- V
     s <- 1
@@ -208,9 +224,9 @@ ASH2D <- function(
   if(safe) r <- t(apply(data, 2, range))
   else     r <- t(apply(data[FiniteValues(data), ], 2, range))
 
-  # Average Shifted Histogram
+  # Average Shifted Histogram (hide message about non-zero out of range density)
   d <- ash::bin2(data, nbin = n)
-  d <- ash::ash2(d, m = k, ...)
+  capture.output({ d <- ash::ash2(d, m = k, ...) })
 
   # Interpolation
   if(interpolation == "fields") { # fastest

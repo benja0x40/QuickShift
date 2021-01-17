@@ -7,8 +7,8 @@
 v2m(x, nrow)
 }
 \description{
-Convert vector indices into matrix indices such that:
+Convert vector indexes into matrix indexes such that:
 
-ij <- v2m(x) => M[x] = M[ij[, 1], ij[, 2]] for each pair of indices
+ij <- v2m(x) => M[x] = M[ij[, 1], ij[, 2]] for each pair of indexes
 }
 \keyword{internal}

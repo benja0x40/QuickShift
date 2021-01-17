@@ -2,14 +2,14 @@
 % Please edit documentation in R/z_knn_stats.R
 \name{knn_smoothing}
 \alias{knn_smoothing}
-\title{Apply a smoothing function to local values}
+\title{Apply a smoothing function to multivariate local values}
 \usage{
 knn_smoothing(v, i, f = mean)
 }
 \arguments{
 \item{v}{numeric vector.}
 
-\item{i}{precomputed matrix of nearest neighbor indices.}
+\item{i}{precomputed matrix of nearest neighbor indexes.}
 
 \item{f}{smoothing function (default = mean).}
 }
@@ -17,6 +17,6 @@ knn_smoothing(v, i, f = mean)
 \code{knn_smoothing} returns a numeric vector.
 }
 \description{
-Apply a smoothing function to local values
+Apply a smoothing function to multivariate local values
 }
 \keyword{internal}
