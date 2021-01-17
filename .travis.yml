@@ -1,5 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 language: r
+
 cache:
   packages: true
 
@@ -10,7 +11,7 @@ branches:
 
 # List of R packages to install via install.packages
 r_packages:
-  - covr
+  - covr                                                 # Code coverage support
 
 # List of packages to install from GitHub using devtools::install_github
 # r_github_packages:
@@ -19,15 +20,15 @@ r_packages:
 # bioc_packages:
 
 # Forces all WARNINGS from R CMD check to become build failures
-warnings_are_errors: false
+warnings_are_errors: true
 
-env: R_CODECOV=true
+# Environment variables
+env:
+  - R_CODECOV=true                                       # Code coverage support
 
 matrix:
   include:
     - os: linux
-      # r_build_args: '--no-build-vignettes'
-      # r_check_args: '--ignore-vignettes'
       addons:
         apt:
           packages:
