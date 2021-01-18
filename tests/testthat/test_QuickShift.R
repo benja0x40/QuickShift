@@ -11,7 +11,7 @@ ShowClusters <- function(M, xyl, q = NULL, use_colors = FALSE) {
     s <- s[2]
   } else {
     s <- s[q$membership]
-    if(use_colors) clr <- rainbow(q$nclust)[q$membership]
+    if(use_colors) clr <- rainbow(q$nclust, alpha = 0.75)[q$membership]
   }
   plot.default(NA, xlim = xyl, ylim = xyl, axes = F, xlab = "", ylab = "")
   points(M, pch = s, col = clr)
@@ -94,7 +94,7 @@ test_that("Careful", {
   expect_equal(as.vector(q$csizes), c(5, 5))
   expect_identical(q$membership, rep(1:2, each = 5))
 
-  e <- as_edgelist(q$graph)
+  e <- igraph::as_edgelist(q$graph)
   e <- e[order(e[, 1]),]
 
   expect_equal(e[, 1], c(1:4, 6:9))
@@ -117,7 +117,7 @@ test_that("Careful", {
     tst <- TestObject(3, n = 100, r = 100)
     q <- with(tst, QuickShift(M, n = 2, decreasing = FALSE))
     with(tst, ShowClusters(M, xyl, q, use_colors = TRUE))
-    loop <- any(is.na(q$membership))
+    loop <- ! identical(c(100:100, 1000:1000), as.vector(table(q$membership)))
   }
 
   expect_identical(q$nclust, 2)
