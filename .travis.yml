@@ -1,20 +1,32 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-language: r
-r:
-  - oldrel
-  - release
-  - devel
-
-cache:
-  packages: true
 
 # Run for pushes to the master branch only
 branches:
   only:
     - master
 
+language: r
+
+r:
+  - oldrel  # Previous major release
+  - release # Current release
+  - devel   # Development branch
+
+os:
+  - linux
+  - osx
+
+addons:
+  apt:
+    packages:
+      - libgit2-dev
+
+cache:
+  packages: true
+
 # List of R packages to install via install.packages
 r_packages:
+  - devtools
   - covr                                                 # Code coverage support
 
 # List of packages to install from GitHub using devtools::install_github
@@ -29,17 +41,6 @@ warnings_are_errors: true
 # Environment variables
 env:
   - R_CODECOV=true                                       # Code coverage support
-
-matrix:
-  include:
-    - os: osx
-    - os: linux
-      addons:
-        apt:
-          packages:
-            - libgit2-dev
-    #   r_build_args: '--no-build-vignettes'
-    #   r_check_args: '--ignore-vignettes'
 
 after_success:
   - if [[ "${R_CODECOV}" ]]; then R -e 'covr::codecov()'; fi
