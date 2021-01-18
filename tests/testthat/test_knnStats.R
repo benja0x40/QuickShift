@@ -76,7 +76,7 @@ context("knn_stats")
 n <- 1000
 
 mu    <- c(-30, -10, 10, 30)
-sigma <- c(3, 1, 1, 3)
+sigma <- c(2, 1, 1, 2)
 
 u <- cbind(mu, mu)
 v <- cbind(sigma, sigma)
